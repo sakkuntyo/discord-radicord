@@ -4,11 +4,7 @@
   "description": "TtoSpeach Bot",
   "main": "index.js",
   "dependencies": {
-    "applicationinsights": "^1.7.6",
-    "applicationinsights-native-metrics": "0.0.5",
-    "bitly": "^6.1.0",
     "discord.js": "github:discordjs/discord.js",
-    "dropbox": "^4.0.30",
     "isomorphic-fetch": "^2.2.1",
     "node-opus": "^0.3.3",
     "opusscript": "0.0.6",
