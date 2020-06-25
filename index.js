@@ -38,7 +38,6 @@ client.on('message', async msg => {
         return 0
       } catch(e) {
         console.log(e)
-        console.log("チャンネルから抜けたいけど抜けられない(実装して)！！！！");
         return 1
       }
     }
