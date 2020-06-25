@@ -86,7 +86,3 @@ $ pm2 save
 
 ### 4.tokenはBot設定ページの Click to Reveal Token をクリックして表示される物を使用する
 
-
-## [Dropbox Developer](https://www.dropbox.com/developers/apps)でする事
-
-## [bitly itlinks](http://bitly.com/a/oauth_apps)でする事
