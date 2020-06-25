@@ -45,19 +45,23 @@ client.on('message', async msg => {
 
     // other TtoS
     var fileName = Math.random().toString(32).substring(2)
-    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize | jq .audioContent -r | base64 -i --decode > ./tmp/' + `${fileName}` + '.mp3', (err, stdout, stderr) => {
+    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize | jq .audioContent -r ', (err, stdout, stderr) => {
+      console.log(stdout)
+      var audioBuffer = new Buffer.from(stdout, 'base64')
+      fs.writeFile(`./tmp/${fileName}.mp3`,audioBuffer, {flag: 'a'}, (err) => {
+        if (err) throw err;
+        console.log(`was write ./tmp/${fileName}.mp3`)
+        try {
+          joinedChannel.play('./tmp/' + `${fileName}` + '.mp3');
+          console.log(`${fileName} played`)
+          return 0
+        } catch(e) {
+          console.log(e)
+          return 1
+        }
+      })
       if(err) {
         console.log(err)
-        return 1
-      }
-      //console.log("stderr ->", stderr)
-      console.log("downloaded")
-      try {
-        joinedChannel.play('./tmp/' + `${fileName}` + '.mp3');
-        console.log(`${fileName} played`)
-        return 0
-      } catch(e) {
-        console.log(e)
         return 1
       }
     })
