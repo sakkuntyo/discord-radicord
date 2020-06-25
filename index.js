@@ -45,10 +45,18 @@ client.on('message', async msg => {
 
     // other TtoS
     var fileName = Math.random().toString(32).substring(2)
-    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize | jq .audioContent -r ', (err, stdout, stderr) => {
+    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize', (err, stdout, stderr) => {
       console.log(stdout)
-      var audioBuffer = new Buffer.from(stdout, 'base64')
-      fs.writeFile(`./tmp/${fileName}.mp3`,audioBuffer, {flag: 'a'}, (err) => {
+
+      //string -> json
+      var audJson = JSON.parse(stdout,'utf-8')
+
+      //json -> base64
+      var b64 = audJson.audioContent
+
+      //base64 -> buffer
+      var buf = new Buffer.from(b64, 'base64')
+      fs.writeFile(`./tmp/${fileName}.mp3`,buf, {flag: 'a'}, (err) => {
         if (err) throw err;
         console.log(`was write ./tmp/${fileName}.mp3`)
         try {
