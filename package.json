@@ -1,0 +1,32 @@
+{
+  "name": "discord-Pero",
+  "version": "1.0.0",
+  "description": "TtoSpeach Bot",
+  "main": "index.js",
+  "dependencies": {
+    "applicationinsights": "^1.7.6",
+    "applicationinsights-native-metrics": "0.0.5",
+    "bitly": "^6.1.0",
+    "discord.js": "github:discordjs/discord.js",
+    "dropbox": "^4.0.30",
+    "isomorphic-fetch": "^2.2.1",
+    "node-opus": "^0.3.3",
+    "opusscript": "0.0.6",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sakkuntyo/discord-oumukaesi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sakkuntyo/discord-oumukaesi/issues"
+  },
+  "homepage": "https://github.com/sakkuntyo/discord-oumukaesi#readme"
+}
