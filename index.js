@@ -1,10 +1,11 @@
-//discordbotの操作に必要
-const discordtoken = '<discordtoken>'
-const Discord = require('discord.js');
-const client = new Discord.Client();
+//共通ライブラリ
 const fs = require('fs');
-const request = require("request");
 const exec = require('child_process').exec;
+
+//discordbotの操作に必要
+const Discord = require('discord.js');
+const discordtoken = JSON.parse(fs.readFileSync('./settings.json', 'utf8')).discordtoken;
+const client = new Discord.Client();
 
 client.on('ready', () => {
   if(!(fs.existsSync("./tmp"))){

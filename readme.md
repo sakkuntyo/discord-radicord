@@ -56,7 +56,7 @@ $ nvm use 10.16.3
 # このアプリの起動
 $ git clone https://github.com/sakkuntyo/discord-pero
 $ cd discord-pero
-$ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i index.js
+$ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settings.json
 $ npm install
 $ npm start
 
