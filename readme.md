@@ -15,7 +15,11 @@
     - request 2.88.0
   - jq
   - Google cloud SDK (CLI)
-    - gcloudコマンドでトークンが取得できる様にしておく必要があります。
+    - 以下のgcloudコマンドでトークンが取得できる様にしておく必要があります。
+
+```
+$ gcloud auth application-default print-access-token
+```
 
 ## 動き概要
 
