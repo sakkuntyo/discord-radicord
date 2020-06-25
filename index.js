@@ -45,7 +45,7 @@ client.on('message', async msg => {
 
     // other TtoS
     var fileName = Math.random().toString(32).substring(2)
-    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + '> ./request-edited.json;curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @request-edited.json https://texttospeech.googleapis.com/v1/text:synthesize | jq .audioContent -r | base64 -i --decode > ./tmp/' + `${fileName}` + '.mp3', (err, stdout, stderr) => {
+    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize | jq .audioContent -r | base64 -i --decode > ./tmp/' + `${fileName}` + '.mp3', (err, stdout, stderr) => {
       if(err) {
         console.log(err)
         return 1
