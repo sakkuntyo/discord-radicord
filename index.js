@@ -46,7 +46,6 @@ client.on('message', async msg => {
     // other TtoS
     var fileName = Math.random().toString(32).substring(2)
     exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize', (err, stdout, stderr) => {
-      console.log(stdout)
 
       //string -> json
       var audJson = JSON.parse(stdout,'utf-8')
