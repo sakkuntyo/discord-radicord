@@ -43,9 +43,26 @@ client.on('message', async msg => {
       }
     }
 
+    //request.json
+    var translateConfig = {
+      audioConfig: {
+        audioEncoding: "LINEAR16",
+        pitch: 0,
+        speakingRate: 1
+      },
+      input: {
+        text: secondory_msg
+      },
+      voice: {
+        languageCode: "en-US",
+        name: "en-US-Wavenet-D"
+      }
+    }
+    fs.writeFileSync("./request.json",JSON.stringify(translateConfig))
+
     // other TtoS
     var fileName = Math.random().toString(32).substring(2)
-    exec('cat ./request.json | sed ' + `"s/peromsg/${secondory_msg}/g" ` + ' | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize', (err, stdout, stderr) => {
+    exec('cat ./request.json | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize', (err, stdout, stderr) => {
 
       //string -> json
       var audJson = JSON.parse(stdout,'utf-8')
