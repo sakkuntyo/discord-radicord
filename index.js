@@ -62,7 +62,7 @@ client.on('message', async msg => {
 
     // other TtoS
     var fileName = Math.random().toString(32).substring(2)
-    exec('cat ./request.json | curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @- https://texttospeech.googleapis.com/v1/text:synthesize', (err, stdout, stderr) => {
+    exec('curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @request.json https://texttospeech.googleapis.com/v1/text:synthesize',{maxBuffer: 1024 * 10240}, (err, stdout, stderr) => {
 
       //string -> json
       var audJson = JSON.parse(stdout,'utf-8')
