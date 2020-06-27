@@ -82,7 +82,10 @@ $ pm2 save
   - View Audiot Log
   - Connect
   - Speak
+  
+![image](https://user-images.githubusercontent.com/20591351/85919186-1a15b900-b8a4-11ea-9912-d309c18672c6.png)
 
 ### 4.tokenはBot設定ページの Click to Reveal Token をクリックして表示される物を使用する
+
 ![image](https://user-images.githubusercontent.com/20591351/85919131-880db080-b8a3-11ea-8a26-79aa1eaf35ad.png)
 
