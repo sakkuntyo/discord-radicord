@@ -11,8 +11,6 @@
 - ubuntu 18.04
   - nodejs 10.16.3
     - discord.js
-    - dropbox 4.0.30
-    - request 2.88.0
   - Google cloud SDK (CLI)
     - 以下のgcloudコマンドでトークンが取得できる様にしておく必要があります。
 
