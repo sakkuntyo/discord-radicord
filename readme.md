@@ -1,6 +1,6 @@
 # 英語音声で読み上げてくれるBot
 
-[招待リンク](https://discordapp.com/channels/711964290617311232/711964290617311235/725034208367607809)
+[招待リンク](https://discord.com/api/oauth2/authorize?client_id=724967155803619398&permissions=3145856&scope=bot)
 
 ## 目的
 
@@ -82,7 +82,9 @@ $ pm2 save
 - 必要なスコープ
   - bot
 - 必要な権限
-  - Send Messages
+  - View Audiot Log
+  - Connect
+  - Speak
 
 ### 4.tokenはBot設定ページの Click to Reveal Token をクリックして表示される物を使用する
 
