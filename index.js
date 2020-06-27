@@ -62,7 +62,6 @@ client.on('message', async msg => {
     fs.writeFileSync("./request.json",JSON.stringify(translateConfig))
 
     // other TtoS
-    var fileName = Math.random().toString(32).substring(2)
     exec('curl -X POST -H "Authorization: Bearer "$(gcloud auth application-default print-access-token) -H "Content-Type: application/json; charset=utf-8" -d @request.json https://texttospeech.googleapis.com/v1/text:synthesize',{maxBuffer: 1024 * 10240}, (err, stdout, stderr) => {
 
       //string -> json
@@ -85,7 +84,7 @@ client.on('message', async msg => {
 
       //play
       joinedChannel.play(stream);
-      console.log(`${fileName} played`)
+      console.log(`play :${secondory_msg}`)
     })
   } 
 });
