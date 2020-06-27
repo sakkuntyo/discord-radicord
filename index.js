@@ -1,6 +1,7 @@
 //共通ライブラリ
 const fs = require('fs');
 const exec = require('child_process').exec;
+const Duplex = require('stream').Duplex;
 
 //discordbotの操作に必要
 const Discord = require('discord.js');
@@ -72,22 +73,19 @@ client.on('message', async msg => {
 
       //base64 -> buffer
       var buf = new Buffer.from(b64, 'base64')
-      fs.writeFile(`./tmp/${fileName}.mp3`,buf, {flag: 'a'}, (err) => {
-        if (err) throw err;
-        console.log(`was write ./tmp/${fileName}.mp3`)
-        try {
-          joinedChannel.play('./tmp/' + `${fileName}` + '.mp3');
-          console.log(`${fileName} played`)
-          return 0
-        } catch(e) {
-          console.log(e)
-          return 1
-        }
-      })
-      if(err) {
-        console.log(err)
-        return 1
-      }
+
+      //buffer -> stream
+      var stream = new Duplex();
+      stream.push(buf);
+      stream.push(null);
+
+      //buffer -> file
+      //fs.writeFileSync(`./tmp/${fileName}.mp3`,buf, {flag: 'a'}) //flag:"a"は追記
+      //fs.writeFileSync(`./tmp/${fileName}.mp3`,buf) //mp3が再生できるか確認する時に使う
+
+      //play
+      joinedChannel.play(stream);
+      console.log(`${fileName} played`)
     })
   } 
 });
