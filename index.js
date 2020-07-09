@@ -19,7 +19,7 @@ client.on('message', async msg => {
   if(msg.author.bot) return;
   console.log("message:", msg.content)
 
-  if(msg.content.match(/^!pero /)) {
+  if(msg.content.match(/^!pero /) || msg.channel.name.match("pero")) {
     console.log("firstcmd: pero")
     var secondory_msg = msg.content.replace(/^!pero /,"");
 
