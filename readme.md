@@ -13,6 +13,7 @@
     - discord.js
   - Google cloud SDK (CLI)
     - 以下のgcloudコマンドでトークンが取得できる様にしておく必要があります。
+    - https://cloud.google.com/sdk/docs/install?hl=JA#linux
 
 ```
 $ gcloud auth application-default print-access-token
