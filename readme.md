@@ -8,7 +8,7 @@
 
 ## 動作環境
 
-- ubuntu 18.04
+- ubuntu 20.04 (Azure VM)
   - nodejs 10.16.3
     - discord.js
 
