@@ -87,3 +87,8 @@ $ pm2 save
 
 ![image](https://user-images.githubusercontent.com/20591351/85919131-880db080-b8a3-11ea-8a26-79aa1eaf35ad.png)
 
+
+## learning
+
+- キュー管理
+https://github.com/DS-Development/delet/blob/43edee301d51b3e1471cc59d279802ad9cad9d48/music/js/music.js#L195
