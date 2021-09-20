@@ -50,6 +50,7 @@ $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settin
 $ npm install //失敗します
 $ sudo apt install build-essential -y
 $ npm config set python /usr/bin/python2.7
+$ npm install //成功します
 $ npm start
 
 # デーモンにしたい場合、pm2を使う
