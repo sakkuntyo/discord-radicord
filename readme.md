@@ -10,19 +10,19 @@
 
 - ubuntu 20.04 (Azure VM)
   - nodejs 10.16.3
-    - discord.js
+    - discord.js 12.3.0
 
 ## 動き概要
 
 1. Discordでボイスチャンネルに入っている人から!spで始まるメッセージを受け取る
-2. ??
+2. 再生する
 
 ## 使い方
 
-### 読み上げる
+### 再生
 
 ```
-!sp <キーワード>
+!sp (<play> or <p>) <URL>
 ```
 
 ### ボイスチャンネルから退出
@@ -51,6 +51,7 @@ $ npm install //失敗します
 $ sudo apt install build-essential -y
 $ npm config set python /usr/bin/python2.7
 $ npm install //成功します
+$ sudo apt install ffmpeg -y //音声の変換処理に使います。
 $ npm start
 
 # デーモンにしたい場合、pm2を使う
