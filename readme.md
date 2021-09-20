@@ -9,7 +9,7 @@
 ## 動作環境
 
 - ubuntu 20.04 (Azure VM)
-  - nodejs 10.16.3
+  - nodejs 14.17.6
     - discord.js 12.3.0
 
 ## 動き概要
