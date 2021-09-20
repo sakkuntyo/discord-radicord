@@ -1,36 +1,28 @@
 # 英語音声で読み上げてくれるBot
 
-[招待リンク](https://discord.com/api/oauth2/authorize?client_id=724967155803619398&permissions=3145856&scope=bot)
+[招待リンク]()
 
 ## 目的
 
-- 話している時に気になった英語をさっと読み上げさせたい
+- ?
 
 ## 動作環境
 
 - ubuntu 18.04
   - nodejs 10.16.3
     - discord.js
-  - Google cloud SDK (CLI)
-    - 以下のgcloudコマンドでトークンが取得できる様にしておく必要があります。
-    - https://cloud.google.com/sdk/docs/install?hl=JA#linux
-
-```
-$ gcloud auth application-default print-access-token
-```
 
 ## 動き概要
 
-1. Discordでボイスチャンネルに入っている人から!peroで始まるメッセージを受け取る
-2. Google Cloud Text to Speech APIを呼び出し、音声データ(base64形式)を取得
-3. 音声データをbase64デコードし、再生
+1. Discordでボイスチャンネルに入っている人から!spで始まるメッセージを受け取る
+2. ??
 
 ## 使い方
 
 ### 読み上げる
 
 ```
-!pero <読み上げさせたいメッセージ>
+!sp <キーワード>
 ```
 
 ### ボイスチャンネルから退出
@@ -38,7 +30,7 @@ $ gcloud auth application-default print-access-token
 注意：これをしないと退出しません
 
 ```
-!pero disc
+!sd
 ```
 
 ## 起動方法
@@ -55,7 +47,9 @@ $ nvm use 10.16.3
 $ git clone https://github.com/sakkuntyo/discord-pero
 $ cd discord-pero
 $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settings.json
-$ npm install
+$ npm install //失敗します
+$ sudo apt install build-essential -y
+$ npm config set python /usr/bin/python2.7
 $ npm start
 
 # デーモンにしたい場合、pm2を使う
