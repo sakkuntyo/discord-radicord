@@ -13,6 +13,9 @@ const client = new Discord.Client();
 //ytdl
 const ytdl = require("discord-ytdl-core");
 
+//ytsr
+const ytsr = require('ytsr');
+
 client.on("ready", () => {
   if (!fs.existsSync("./tmp")) {
     fs.mkdirSync("./tmp");
@@ -42,10 +45,20 @@ client.on("message", async (msg) => {
     // play cmd
     if (secondory_msg.match(/^play .*/) || secondory_msg.match(/^p .*$/)) {
       console.log("secondcmd: play");
-      var messageInfo = secondory_msg.replace(/^p.* /, "");
-      console.log(messageInfo);
+      var messageInfo = secondory_msg.replace(/^play /, "");
+      messageInfo = messageInfo.replace(/^p /, "");
+      console.log("messageInfo ->", messageInfo);
 
-      let stream = ytdl(messageInfo, {
+      //search
+      const filters = await ytsr.getFilters(messageInfo);
+      const filter = filters.get('Type').get('Video');
+      const options = {
+	          pages: 1,
+      }
+      const searchResults = await ytsr(filter.url, options);
+
+      //play
+      let stream = ytdl(searchResults.items[0].url, {
         filter: "audioonly",
         opusEncoded: true,
         encoderArgs: ["-af", "bass=g=10,dynaudnorm=f=200,volume=0.05"],

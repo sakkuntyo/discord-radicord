@@ -22,7 +22,7 @@
 ### 再生
 
 ```
-!sp (<play> or <p>) <URL>
+!sp (<play> or <p>) (<URL> or <keyword>)
 ```
 
 ### ボイスチャンネルから退出
