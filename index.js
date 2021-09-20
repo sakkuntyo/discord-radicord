@@ -48,7 +48,7 @@ client.on("message", async (msg) => {
       let stream = ytdl(messageInfo, {
         filter: "audioonly",
         opusEncoded: true,
-        encoderArgs: ["-af", "bass=g=10,dynaudnorm=f=200"],
+        encoderArgs: ["-af", "bass=g=10,dynaudnorm=f=200,volume=0.05"],
       });
 
       msg.member.voice.channel.join().then((connection) => {
