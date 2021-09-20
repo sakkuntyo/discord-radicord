@@ -1,58 +1,79 @@
 //共通ライブラリ
-const fs = require('fs');
-const exec = require('child_process').exec;
-const Duplex = require('stream').Duplex;
+const fs = require("fs");
+const exec = require("child_process").exec;
+const Duplex = require("stream").Duplex;
 
 //discordbotの操作に必要
-const Discord = require('discord.js');
-const discordtoken = JSON.parse(fs.readFileSync('./settings.json', 'utf8')).discordtoken;
+const Discord = require("discord.js");
+const discordtoken = JSON.parse(
+  fs.readFileSync("./settings.json", "utf8")
+).discordtoken;
 const client = new Discord.Client();
 
-client.on('ready', () => {
-  if(!(fs.existsSync("./tmp"))){
-    fs.mkdirSync("./tmp")
+//ytdl
+const ytdl = require("discord-ytdl-core");
+
+client.on("ready", () => {
+  if (!fs.existsSync("./tmp")) {
+    fs.mkdirSync("./tmp");
   }
   console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', async msg => {
-  if(msg.author.bot) return;
-  console.log("message:", msg.content)
+client.on("message", async (msg) => {
+  if (msg.author.bot) return;
+  console.log("message:", msg.content);
 
-  if(msg.content.match(/^!sr /) || msg.channel.name.match("sr")) {
-    console.log("firstcmd: sr")
-    var secondory_msg = msg.content.replace(/^!sr /,"");
+  if (msg.content.match(/^!sr /) || msg.channel.name.match("sr")) {
+    console.log("firstcmd: sr");
+    var secondory_msg = msg.content.replace(/^!sr /, "");
 
     var voiceChannel = msg.member.voice.channel;
-    
+
     // join force
     try {
       var joinedChannel = await voiceChannel.join();
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
 
-    console.log("secondmsg ->", secondory_msg)
+    console.log("secondmsg ->", secondory_msg);
 
     // play cmd
-    if(secondory_msg.match(/^play .*/) || secondory_msg.match(/^p .*$/)) {
-      console.log("secondcmd: play")
-      var messageInfo = secondory_msg.replace(/^p.* /,"");
-      console.log(messageInfo)
+    if (secondory_msg.match(/^play .*/) || secondory_msg.match(/^p .*$/)) {
+      console.log("secondcmd: play");
+      var messageInfo = secondory_msg.replace(/^p.* /, "");
+      console.log(messageInfo);
+
+      let stream = ytdl(messageInfo, {
+        filter: "audioonly",
+        opusEncoded: true,
+        encoderArgs: ["-af", "bass=g=10,dynaudnorm=f=200"],
+      });
+
+      msg.member.voice.channel.join().then((connection) => {
+        let dispatcher = connection
+          .play(stream, {
+            type: "opus",
+          })
+          .on("finish", () => {
+            msg.guild.me.voice.channel.leave();
+          });
+      });
     }
 
     // disconnect cmd
-    if(secondory_msg.match(/^disc$/)) {
-      console.log("secondcmd: disc")
+    if (secondory_msg.match(/^disc$/)) {
+      console.log("secondcmd: disc");
       try {
         voiceChannel.leave();
-        return 0
-      } catch(e) {
-        console.log(e)
-        return 1
+        return 0;
+      } catch (e) {
+        console.log(e);
+        return 1;
       }
     }
-  } 
+  }
 });
-  
+
 client.login(discordtoken);
