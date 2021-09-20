@@ -4,11 +4,13 @@
   "description": "TtoSpeach Bot",
   "main": "index.js",
   "dependencies": {
+    "discord-ytdl-core": "^5.0.4",
     "discord.js": "^12.3.0",
     "isomorphic-fetch": "^2.2.1",
     "node-opus": "^0.3.3",
     "opusscript": "0.0.6",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "ytdl-core": "^4.9.1"
   },
   "devDependencies": {},
   "scripts": {
