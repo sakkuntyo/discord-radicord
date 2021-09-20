@@ -57,6 +57,8 @@ client.on("message", async (msg) => {
       }
       const searchResults = await ytsr(filter.url, options);
 
+      msg.channel.send(searchResults.items[0].url)
+
       //play
       let stream = ytdl(searchResults.items[0].url, {
         filter: "audioonly",
