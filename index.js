@@ -32,6 +32,13 @@ client.on('message', async msg => {
       console.log(e)
     }
 
+    console.log("secondmsg ->", secondory_msg)
+
+    // play cmd
+    if(secondory_msg.match(/^play .*/) || secondory_msg.match(/^p .*$/)) {
+      console.log("secondcmd: play")
+    }
+
     // disconnect cmd
     if(secondory_msg.match(/^disc$/)) {
       console.log("secondcmd: disc")
