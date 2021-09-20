@@ -37,6 +37,8 @@ client.on('message', async msg => {
     // play cmd
     if(secondory_msg.match(/^play .*/) || secondory_msg.match(/^p .*$/)) {
       console.log("secondcmd: play")
+      var messageInfo = secondory_msg.replace(/^p.* /,"");
+      console.log(messageInfo)
     }
 
     // disconnect cmd
