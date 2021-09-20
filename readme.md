@@ -1,4 +1,4 @@
-# 英語音声で読み上げてくれるBot
+# 再生してくれるBot
 
 [招待リンク](https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot)
 
