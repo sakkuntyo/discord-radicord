@@ -1,6 +1,6 @@
 # 英語音声で読み上げてくれるBot
 
-[招待リンク]()
+[招待リンク](https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot)
 
 ## 目的
 
@@ -79,6 +79,7 @@ $ pm2 save
   - View Audiot Log
   - Connect
   - Speak
+  - Send Messages *任意
   
 ![image](https://user-images.githubusercontent.com/20591351/85919186-1a15b900-b8a4-11ea-9912-d309c18672c6.png)
 
