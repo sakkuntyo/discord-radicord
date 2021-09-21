@@ -56,12 +56,10 @@ client.on("message", async (msg) => {
         musicUrl = messageInfo
       } else {
       //search
-      const filters = await ytsr.getFilters(messageInfo);
-      const filter = filters.get("Type").get("Video");
       const options = {
         pages: 1,
       };
-      const searchResults = await ytsr(filter.url, options);
+      const searchResults = await ytsr(messageInfo, options);
       musicUrl = searchResults.items[0].url;
       }
 
