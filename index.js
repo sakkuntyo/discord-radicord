@@ -70,7 +70,8 @@ client.on("message", async (msg) => {
       if (!queue.get(msg.guild.id)) {
         queue.set(msg.guild.id, {
           playing: false,
-          songs: []
+          connection: null,
+          songs: [],
         });
       }
 
@@ -84,7 +85,7 @@ client.on("message", async (msg) => {
 
       //already playing
       if (queue.get(msg.guild.id).playing) {
-	console.log("Since it is playing, we will just add it to the queue.")
+        console.log("Since it is playing, we will just add it to the queue.");
         return;
       }
 
@@ -92,17 +93,30 @@ client.on("message", async (msg) => {
     }
 
     // queue cmd
-    if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/) ) {
+    if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/)) {
       msg.channel.send(
-        "queue status" + "\r " + JSON.stringify(queue.get(msg.guild.id).songs,null,"\t")
+        "queue status" +
+          "\r " +
+          JSON.stringify(queue.get(msg.guild.id).songs, null, "\t")
       );
-      queue.get(msg.guild.id).songs
+      queue.get(msg.guild.id).songs;
+      return;
     }
+
+    /*
+    // skip cmd
+    if (secondory_msg.match(/^s/) || secondory_msg.match(/^skip/) ) {
+      queue.get(msg.guild.id).connection.dispatcher.finish();
+      return
+    }
+    */
+
     // disconnect cmd
     if (secondory_msg.match(/^disc$/)) {
       console.log("secondcmd: disc");
       try {
         voiceChannel.leave();
+        queue.delete(msg.guild.id);
         return 0;
       } catch (e) {
         console.log(e);
@@ -114,7 +128,7 @@ client.on("message", async (msg) => {
 
 function play(msg) {
   if (!queue.get(msg.guild.id).songs[0]) {
-    console.log("tried to play, but the queue was empty, so I quit.")
+    console.log("tried to play, but the queue was empty, so I quit.");
     msg.guild.me.voice.channel.leave();
     return;
   }
@@ -126,6 +140,7 @@ function play(msg) {
 
   msg.member.voice.channel.join().then((connection) => {
     queue.get(msg.guild.id).playing = true;
+    queue.get(msg.guild.id).connection = connection;
 
     let dispatcher = connection
       .play(stream, {
@@ -135,11 +150,11 @@ function play(msg) {
         queue.get(msg.guild.id).playing = false;
         queue.get(msg.guild.id).songs.shift();
         if (queue.get(msg.guild.id).songs.length == 0) {
-	  console.log("The song is over and the queue is empty, so I stop.")
+          console.log("The song is over and the queue is empty, so I stop.");
           msg.guild.me.voice.channel.leave();
           return;
         }
-        play(msg)
+        play(msg);
       });
   });
 }
