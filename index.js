@@ -91,6 +91,13 @@ client.on("message", async (msg) => {
       play(msg, queue.get(msg.guild.id).songs[0]);
     }
 
+    // queue cmd
+    if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/) ) {
+      msg.channel.send(
+        "queue status" + "\r " + JSON.stringify(queue.get(msg.guild.id).songs,null,"\t")
+      );
+      queue.get(msg.guild.id).songs
+    }
     // disconnect cmd
     if (secondory_msg.match(/^disc$/)) {
       console.log("secondcmd: disc");
