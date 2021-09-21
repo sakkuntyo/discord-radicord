@@ -67,7 +67,6 @@ client.on("message", async (msg) => {
 
       //play
       let stream = ytdl(musicUrl, {
-        filter: "audioonly",
         opusEncoded: true,
         encoderArgs: ["-af", "bass=g=10,volume=0.05"],
       });
