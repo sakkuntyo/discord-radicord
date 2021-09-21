@@ -17,6 +17,9 @@ const ytdl = require("discord-ytdl-core");
 const ytsr = require("ytsr");
 const validUrl = require("valid-url");
 
+//queue
+const queue = new Map();
+
 client.on("ready", () => {
   if (!fs.existsSync("./tmp")) {
     fs.mkdirSync("./tmp");
@@ -50,35 +53,42 @@ client.on("message", async (msg) => {
       messageInfo = messageInfo.replace(/^p /, "");
       console.log("messageInfo ->", messageInfo);
 
+      //search and push queue
+      var musicTitle = "";
       var musicUrl = "";
       if (validUrl.isUri(messageInfo)) {
         musicUrl = messageInfo;
       } else {
-        //search
         const options = {
           pages: 1,
         };
         const searchResults = await ytsr(messageInfo, options);
+        musicTitle = searchResults.items[0].title;
         musicUrl = searchResults.items[0].url;
       }
 
-      msg.channel.send(musicUrl);
+      if (!queue.get(msg.guild.id)) {
+        queue.set(msg.guild.id, {
+          playing: false,
+          songs: []
+        });
+      }
 
-      //play
-      let stream = ytdl(musicUrl, {
-        opusEncoded: true,
-        encoderArgs: ["-af", "bass=g=10,volume=0.05"],
-      });
+      queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl });
 
-      msg.member.voice.channel.join().then((connection) => {
-        let dispatcher = connection
-          .play(stream, {
-            type: "opus",
-          })
-          .on("finish", () => {
-            msg.guild.me.voice.channel.leave();
-          });
-      });
+      msg.channel.send(
+        "queue index " + queue.get(msg.guild.id).songs.length + "\r" + musicUrl
+      );
+
+      console.log(queue.get(msg.guild.id));
+
+      //already playing
+      if (queue.get(msg.guild.id).playing) {
+	console.log("Since it is playing, we will just add it to the queue.")
+        return;
+      }
+
+      play(msg, queue.get(msg.guild.id).songs[0]);
     }
 
     // disconnect cmd
@@ -94,5 +104,37 @@ client.on("message", async (msg) => {
     }
   }
 });
+
+function play(msg) {
+  if (!queue.get(msg.guild.id).songs[0]) {
+    console.log("tried to play, but the queue was empty, so I quit.")
+    msg.guild.me.voice.channel.leave();
+    return;
+  }
+
+  let stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
+    opusEncoded: true,
+    encoderArgs: ["-af", "bass=g=10,volume=0.05"],
+  });
+
+  msg.member.voice.channel.join().then((connection) => {
+    queue.get(msg.guild.id).playing = true;
+
+    let dispatcher = connection
+      .play(stream, {
+        type: "opus",
+      })
+      .on("finish", () => {
+        queue.get(msg.guild.id).playing = false;
+        queue.get(msg.guild.id).songs.shift();
+        if (queue.get(msg.guild.id).songs.length == 0) {
+	  console.log("The song is over and the queue is empty, so I stop.")
+          msg.guild.me.voice.channel.leave();
+          return;
+        }
+        play(msg)
+      });
+  });
+}
 
 client.login(discordtoken);
