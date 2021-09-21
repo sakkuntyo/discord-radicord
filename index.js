@@ -14,7 +14,8 @@ const client = new Discord.Client();
 const ytdl = require("discord-ytdl-core");
 
 //ytsr
-const ytsr = require('ytsr');
+const ytsr = require("ytsr");
+const validUrl = require("valid-url");
 
 client.on("ready", () => {
   if (!fs.existsSync("./tmp")) {
@@ -49,18 +50,25 @@ client.on("message", async (msg) => {
       messageInfo = messageInfo.replace(/^p /, "");
       console.log("messageInfo ->", messageInfo);
 
+
+      var musicUrl = ""
+      if (validUrl.isUri(messageInfo)) {
+        musicUrl = messageInfo
+      } else {
       //search
       const filters = await ytsr.getFilters(messageInfo);
-      const filter = filters.get('Type').get('Video');
+      const filter = filters.get("Type").get("Video");
       const options = {
-	          pages: 1,
-      }
+        pages: 1,
+      };
       const searchResults = await ytsr(filter.url, options);
+      musicUrl = searchResults.items[0].url;
+      }
 
-      msg.channel.send(searchResults.items[0].url)
+      msg.channel.send(musicUrl);
 
       //play
-      let stream = ytdl(searchResults.items[0].url, {
+      let stream = ytdl(musicUrl, {
         filter: "audioonly",
         opusEncoded: true,
         encoderArgs: ["-af", "bass=g=15,volume=0.07"],

@@ -10,9 +10,13 @@
     "node-opus": "^0.3.3",
     "opusscript": "0.0.6",
     "request": "^2.88.0",
-    "ytdl-core": "^4.9.1"
+    "valid-url": "^1.0.9",
+    "ytdl-core": "^4.9.1",
+    "ytsr": "^3.5.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "prettier": "^2.4.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
