@@ -50,17 +50,16 @@ client.on("message", async (msg) => {
       messageInfo = messageInfo.replace(/^p /, "");
       console.log("messageInfo ->", messageInfo);
 
-
-      var musicUrl = ""
+      var musicUrl = "";
       if (validUrl.isUri(messageInfo)) {
-        musicUrl = messageInfo
+        musicUrl = messageInfo;
       } else {
-      //search
-      const options = {
-        pages: 1,
-      };
-      const searchResults = await ytsr(messageInfo, options);
-      musicUrl = searchResults.items[0].url;
+        //search
+        const options = {
+          pages: 1,
+        };
+        const searchResults = await ytsr(messageInfo, options);
+        musicUrl = searchResults.items[0].url;
       }
 
       msg.channel.send(musicUrl);
