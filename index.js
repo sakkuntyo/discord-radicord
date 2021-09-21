@@ -71,7 +71,7 @@ client.on("message", async (msg) => {
       let stream = ytdl(musicUrl, {
         filter: "audioonly",
         opusEncoded: true,
-        encoderArgs: ["-af", "bass=g=15,volume=0.07"],
+        encoderArgs: ["-af", "bass=g=10,volume=0.05"],
       });
 
       msg.member.voice.channel.join().then((connection) => {
