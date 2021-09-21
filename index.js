@@ -26,7 +26,7 @@ client.on("ready", () => {
 
 client.on("message", async (msg) => {
   if (msg.author.bot) return;
-  console.log("message:", msg.content);
+  //console.log("message:", msg.content);
 
   if (msg.content.match(/^!sr /) || msg.channel.name.match("sr")) {
     console.log("firstcmd: sr");
