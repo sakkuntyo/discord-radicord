@@ -158,7 +158,7 @@ client.on("message", async (msg) => {
     */
 
     // disconnect cmd
-    if (secondory_msg.match(/^disc$/)) {
+    if (secondory_msg.match(/^disc$/) || secondory_msg.match(/^d$/) || secondory_msg.match(/^disconnect$/)) {
       console.log("secondcmd: disc");
       try {
         voiceChannel.leave();
