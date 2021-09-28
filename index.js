@@ -103,7 +103,7 @@ client.on("message", async (msg) => {
       })
 
       msg.channel.send(
-        "shuffled" +
+        "queue" +
         "\r " +
         JSON.stringify(songs, null, "\t")
       );
