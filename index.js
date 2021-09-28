@@ -105,7 +105,7 @@ client.on("message", async (msg) => {
       return;
     }
 
-    // queue cmd
+    // shuffle cmd
     if (secondory_msg.match(/^sh/) || secondory_msg.match(/^shuffle/)) {
       for(i = queue.get(msg.guild.id).songs.length - 1; i > 0; i--) {
 	          var j = Math.floor(Math.random() * (i + 1));
