@@ -96,12 +96,18 @@ client.on("message", async (msg) => {
 
     // queue cmd
     if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/)) {
+      var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
+      songs.filter(song => {
+        song.url = "<" + song.url
+        song.url = song.url + ">"
+      })
+
       msg.channel.send(
-        "queue status" +
-          "\r " +
-          JSON.stringify(queue.get(msg.guild.id).songs, null, "\t")
+        "shuffled" +
+        "\r " +
+        JSON.stringify(songs, null, "\t")
       );
-      queue.get(msg.guild.id).songs;
+      
       return;
     }
 
@@ -127,12 +133,18 @@ client.on("message", async (msg) => {
       console.log("secondcmd: mv");
       var index = secondory_msg.replace(/^mv /, "") - 1;
       console.log(queue.get(msg.guild.id).songs)
-      queue.get(msg.guild.id).songs.move(index,0);
+      queue.get(msg.guild.id).songs.move(index,1);
+
+      var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
+      songs.filter(song => {
+        song.url = "<" + song.url
+        song.url = song.url + ">"
+      })
 
       msg.channel.send(
-        "queue status" +
-          "\r " +
-          JSON.stringify(queue.get(msg.guild.id).songs, null, "\t")
+        "shuffled" +
+        "\r " +
+        JSON.stringify(songs, null, "\t")
       );
 
       return;
