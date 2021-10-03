@@ -80,7 +80,7 @@ client.on("message", async (msg) => {
       queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl });
 
       msg.channel.send(
-        "queue index " + queue.get(msg.guild.id).songs.length + "\r" + musicUrl
+        "queue index " + queue.get(msg.guild.id).songs.length + "\r" + "<" +musicUrl + ">"
       );
 
       console.log(queue.get(msg.guild.id));
