@@ -9,6 +9,7 @@ const discordtoken = JSON.parse(
   fs.readFileSync("./settings.json", "utf8")
 ).discordtoken;
 const client = new Discord.Client();
+const getYoutubeTitle = require('get-youtube-title-await')
 
 //ytdl
 const ytdl = require("discord-ytdl-core");
@@ -58,6 +59,7 @@ client.on("message", async (msg) => {
       var musicUrl = "";
       if (validUrl.isUri(messageInfo)) {
         musicUrl = messageInfo;
+        musicTitle =  await getYoutubeTitle(musicUrl.replace(/.*?v=/,"").replace(/&.*/,""))
       } else {
         const options = {
           pages: 1,
