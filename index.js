@@ -63,7 +63,7 @@ client.on("message", async (msg) => {
           pages: 1,
         };
         const filters1 = await ytsr.getFilters(messageInfo);
-	const filter1 = filters1.get('Type').get('Video');
+        const filter1 = filters1.get("Type").get("Video");
         const searchResults = await ytsr(filter1.url, options);
         musicTitle = searchResults.items[0].title;
         musicUrl = searchResults.items[0].url;
@@ -79,9 +79,23 @@ client.on("message", async (msg) => {
 
       queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl });
 
-      msg.channel.send(
-        "queue index " + queue.get(msg.guild.id).songs.length + "\r" + "<" +musicUrl + ">"
-      );
+      if (queue.get(msg.guild.id).songs[queue.get(msg.guild.id).songs.length - 1].title) {
+        msg.channel.send(
+          "queue index " +
+            queue.get(msg.guild.id).songs.length +
+            "\r" +
+            musicUrl
+        );
+      } else {
+        msg.channel.send(
+          "queue index " +
+            queue.get(msg.guild.id).songs.length +
+            "\r" +
+            "<" +
+            musicUrl +
+            ">"
+        );
+      }
 
       console.log(queue.get(msg.guild.id));
 
@@ -97,27 +111,23 @@ client.on("message", async (msg) => {
     // queue cmd
     if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/)) {
       var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
-      songs.filter(song => {
-        song.url = "<" + song.url
-        song.url = song.url + ">"
-      })
+      songs.filter((song) => {
+        song.url = "<" + song.url;
+        song.url = song.url + ">";
+      });
 
-      msg.channel.send(
-        "queue" +
-        "\r " +
-        JSON.stringify(songs, null, "\t")
-      );
-      
+      msg.channel.send("queue" + "\r " + JSON.stringify(songs, null, "\t"));
+
       return;
     }
 
     // shuffle cmd
     if (secondory_msg.match(/^sh/) || secondory_msg.match(/^shuffle/)) {
-      for(i = queue.get(msg.guild.id).songs.length - 1; i > 0; i--) {
-	          var j = Math.floor(Math.random() * (i + 1));
-	          var tmp = queue.get(msg.guild.id).songs[i];
-	          queue.get(msg.guild.id).songs[i] = queue.get(msg.guild.id).songs[j];
-	          queue.get(msg.guild.id).songs[j] = tmp;
+      for (i = queue.get(msg.guild.id).songs.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var tmp = queue.get(msg.guild.id).songs[i];
+        queue.get(msg.guild.id).songs[i] = queue.get(msg.guild.id).songs[j];
+        queue.get(msg.guild.id).songs[j] = tmp;
       }
       msg.channel.send(
         "shuffled" +
@@ -132,20 +142,16 @@ client.on("message", async (msg) => {
     if (secondory_msg.match(/^mv .*/)) {
       console.log("secondcmd: mv");
       var index = secondory_msg.replace(/^mv /, "") - 1;
-      console.log(queue.get(msg.guild.id).songs)
-      queue.get(msg.guild.id).songs.move(index,1);
+      console.log(queue.get(msg.guild.id).songs);
+      queue.get(msg.guild.id).songs.move(index, 1);
 
       var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
-      songs.filter(song => {
-        song.url = "<" + song.url
-        song.url = song.url + ">"
-      })
+      songs.filter((song) => {
+        song.url = "<" + song.url;
+        song.url = song.url + ">";
+      });
 
-      msg.channel.send(
-        "shuffled" +
-        "\r " +
-        JSON.stringify(songs, null, "\t")
-      );
+      msg.channel.send("shuffled" + "\r " + JSON.stringify(songs, null, "\t"));
 
       return;
     }
@@ -158,7 +164,11 @@ client.on("message", async (msg) => {
     */
 
     // disconnect cmd
-    if (secondory_msg.match(/^disc$/) || secondory_msg.match(/^d$/) || secondory_msg.match(/^disconnect$/)) {
+    if (
+      secondory_msg.match(/^disc$/) ||
+      secondory_msg.match(/^d$/) ||
+      secondory_msg.match(/^disconnect$/)
+    ) {
       console.log("secondcmd: disc");
       try {
         voiceChannel.leave();
@@ -207,17 +217,15 @@ function play(msg) {
 
 client.login(discordtoken);
 
-
-
-Array.prototype.move = function(from, to) {
+Array.prototype.move = function (from, to) {
   // Prototypes throw TypeErrors when the context or arguments are invalid
-  if (Object.prototype.toString.call(this) !== '[object Array]') {
-             throw new TypeError("`this` must be Array, not " + typeof this);
-  }//from   ww  w  .  j  av  a 2  s .co  m
-  if (typeof from !== 'number') {
+  if (Object.prototype.toString.call(this) !== "[object Array]") {
+    throw new TypeError("`this` must be Array, not " + typeof this);
+  } //from   ww  w  .  j  av  a 2  s .co  m
+  if (typeof from !== "number") {
     throw new TypeError("argument[0] must be number, not " + typeof from);
   }
-  if (typeof to !== 'number') {
+  if (typeof to !== "number") {
     throw new TypeError("argument[1] must be number, not " + typeof to);
   }
   var element = this[from];
