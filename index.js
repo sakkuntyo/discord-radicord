@@ -155,13 +155,11 @@ client.on("message", async (msg) => {
 
       return;
     }
-    /*
     // skip cmd
     if (secondory_msg.match(/^s/) || secondory_msg.match(/^skip/) ) {
-      queue.get(msg.guild.id).connection.dispatcher.finish();
+      queue.get(msg.guild.id).connection.dispatcher.end("Skip command used")
       return
     }
-    */
 
     // disconnect cmd
     if (
