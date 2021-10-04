@@ -81,7 +81,7 @@ client.on("message", async (msg) => {
 
       queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl });
 
-      if (queue.get(msg.guild.id).songs[queue.get(msg.guild.id).songs.length - 1].title) {
+      if (!validUrl.isUri(messageInfo)) {
         msg.channel.send(
           "queue index " +
             queue.get(msg.guild.id).songs.length +
