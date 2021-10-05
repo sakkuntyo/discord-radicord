@@ -54,8 +54,8 @@
 $ git clone https://github.com/creationix/nvm ~/.nvm
 $ source ~/.nvm/nvm.sh
 $ echo "source ~/.nvm/nvm.sh" >> ~/.bashrc
-$ nvm install 10.16.3
-$ nvm use 10.16.3
+$ nvm install 14.17.6
+$ nvm use 14.17.6
 
 # このアプリの起動
 $ git clone https://github.com/sakkuntyo/discord-pero
