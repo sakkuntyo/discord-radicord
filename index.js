@@ -190,6 +190,7 @@ function play(msg) {
   }
 
   let stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
+    filter: "audioonly",
     opusEncoded: true,
     encoderArgs: ["-af", "bass=g=10,volume=0.05"],
   });
