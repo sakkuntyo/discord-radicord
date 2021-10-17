@@ -193,11 +193,20 @@ function play(msg) {
     return;
   }
 
-  let stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
-    filter: "audioonly",
-    opusEncoded: true,
-    encoderArgs: ["-af", "bass=g=20,volume=0.05"],
-  });
+  var stream = null;
+  if(queue.get(msg.guild.id).songs[0].isLive){
+    stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
+      opusEncoded: true,
+      encoderArgs: ["-af", "bass=g=20,volume=0.05"],
+    });
+  }
+  else {
+    stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
+      filter: "audioonly",
+      opusEncoded: true,
+      encoderArgs: ["-af", "bass=g=20,volume=0.05"],
+    });
+  }
 
   msg.member.voice.channel.join().then((connection) => {
     queue.get(msg.guild.id).playing = true;
