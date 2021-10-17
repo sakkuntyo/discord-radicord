@@ -145,6 +145,7 @@ client.on("message", async (msg) => {
         song.url = "<" + song.url;
         song.url = song.url + ">";
       });
+      msg.channel.send("queue ->");
       const numChunks = Math.ceil(JSON.stringify(songs, null, "\t").length / 1900)
       const chunks = new Array(numChunks)
       for (let i=0, x=0; i < numChunks; ++i, x += 1900) {
@@ -162,11 +163,8 @@ client.on("message", async (msg) => {
         queue.get(msg.guild.id).songs[i] = queue.get(msg.guild.id).songs[j];
         queue.get(msg.guild.id).songs[j] = tmp;
       }
-      msg.channel.send(
-        "shuffled" +
-          "\r " +
-          JSON.stringify(queue.get(msg.guild.id).songs, null, "\t")
-      );
+      msg.channel.send("shuffled");
+
       queue.get(msg.guild.id).songs;
       return;
     }
