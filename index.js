@@ -111,7 +111,6 @@ client.on("message", async (msg) => {
 
       msg.channel.send("added to queue -> " + messageInfo);
       msg.channel.send("queue length -> " + queue.get(msg.guild.id).songs.length);
-      msg.channel.send("now playing -> " + "<" + queue.get(msg.guild.id).songs[0].url + ">")
 
       console.log(queue.get(msg.guild.id));
 
@@ -221,6 +220,7 @@ function play(msg) {
 
   console.log(queue.get(msg.guild.id).songs[0].url)
   console.log(queue.get(msg.guild.id).songs[0].title)
+  msg.channel.send("now playing -> " + queue.get(msg.guild.id).songs[0].url)
 
   msg.member.voice.channel.join().then((connection) => {
     queue.get(msg.guild.id).playing = true;
