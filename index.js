@@ -222,16 +222,19 @@ function play(msg) {
   if(queue.get(msg.guild.id).songs[0].isLive){
     stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
       opusEncoded: true,
-      encoderArgs: ["-af", "bass=g=20,volume=0.05"],
+      encoderArgs: ["-af", "bass=g=10,volume=0.05"],
     });
   }
   else {
     stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
       filter: "audioonly",
       opusEncoded: true,
-      encoderArgs: ["-af", "bass=g=20,volume=0.05"],
+      encoderArgs: ["-af", "bass=g=10,volume=0.05"],
     });
   }
+
+  console.log(queue.get(msg.guild.id).songs[0].url)
+  console.log(queue.get(msg.guild.id).songs[0].title)
 
   msg.member.voice.channel.join().then((connection) => {
     queue.get(msg.guild.id).playing = true;
@@ -242,6 +245,7 @@ function play(msg) {
         type: "opus",
       })
       .on("finish", () => {
+        console.log("finished")
         queue.get(msg.guild.id).playing = false;
         queue.get(msg.guild.id).songs.shift();
         if (queue.get(msg.guild.id).songs.length == 0) {
@@ -250,6 +254,14 @@ function play(msg) {
           return;
         }
         play(msg);
+      })
+      .on("error", (error) => {
+        console.log(error)
+	play(msg)
+      })
+      .on("debug", (error) => {
+        console.log(error)
+        play(msg)
       });
   });
 }
