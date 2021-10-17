@@ -10,6 +10,7 @@ const discordtoken = JSON.parse(
 ).discordtoken;
 const client = new Discord.Client();
 const getYoutubeTitle = require('get-youtube-title-await')
+const getYoutubeType = require('get-youtube-type-await')
 
 //ytdl
 const ytdl = require("discord-ytdl-core");
@@ -57,9 +58,11 @@ client.on("message", async (msg) => {
       //search and push queue
       var musicTitle = "";
       var musicUrl = "";
+      var isLive = "";
       if (validUrl.isUri(messageInfo)) {
         musicUrl = messageInfo;
         musicTitle =  await getYoutubeTitle(musicUrl.replace(/.*?v=/,"").replace(/&.*/,""))
+        isLive =  await getYoutubeType(musicUrl.replace(/.*?v=/,"").replace(/&.*/,"")) == "live"
       } else {
         const options = {
           pages: 1,
@@ -69,6 +72,7 @@ client.on("message", async (msg) => {
         const searchResults = await ytsr(filter1.url, options);
         musicTitle = searchResults.items[0].title;
         musicUrl = searchResults.items[0].url;
+        isLive =  await getYoutubeType(musicUrl.replace(/.*?v=/,"").replace(/&.*/,"")) == "live"
       }
 
       if (!queue.get(msg.guild.id)) {
@@ -79,7 +83,7 @@ client.on("message", async (msg) => {
         });
       }
 
-      queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl });
+      queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl, isLive: isLive });
 
       if (!validUrl.isUri(messageInfo)) {
         msg.channel.send(
@@ -192,7 +196,7 @@ function play(msg) {
   let stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
     filter: "audioonly",
     opusEncoded: true,
-    encoderArgs: ["-af", "bass=g=10,volume=0.05"],
+    encoderArgs: ["-af", "bass=g=20,volume=0.05"],
   });
 
   msg.member.voice.channel.join().then((connection) => {
