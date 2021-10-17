@@ -1,19 +1,22 @@
 {
   "name": "discord-Pero",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TtoSpeach Bot",
   "main": "index.js",
   "dependencies": {
+    "array-foreach-async": "^1.0.1",
     "discord-ytdl-core": "^5.0.4",
     "discord.js": "^12.3.0",
     "get-youtube-title": "^1.0.1",
     "get-youtube-title-await": "^1.1.2",
+    "get-youtube-type-await": "^1.0.0",
     "isomorphic-fetch": "^2.2.1",
     "node-opus": "^0.3.3",
     "opusscript": "0.0.6",
     "request": "^2.88.0",
     "valid-url": "^1.0.9",
     "ytdl-core": "^4.9.1",
+    "ytpl": "^2.2.3",
     "ytsr": "^3.5.3"
   },
   "devDependencies": {
