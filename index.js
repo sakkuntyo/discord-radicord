@@ -2,6 +2,7 @@
 const fs = require("fs");
 const exec = require("child_process").exec;
 const Duplex = require("stream").Duplex;
+require("array-foreach-async");
 
 //discordbotの操作に必要
 const Discord = require("discord.js");
@@ -14,6 +15,9 @@ const getYoutubeType = require('get-youtube-type-await')
 
 //ytdl
 const ytdl = require("discord-ytdl-core");
+
+//ytpl
+const ytpl = require('ytpl');
 
 //ytsr
 const ytsr = require("ytsr");
@@ -56,13 +60,30 @@ client.on("message", async (msg) => {
       console.log("messageInfo ->", messageInfo);
 
       //search and push queue
+      addMusics = [];
+
       var musicTitle = "";
       var musicUrl = "";
       var isLive = "";
       if (validUrl.isUri(messageInfo)) {
-        musicUrl = messageInfo;
-        musicTitle =  await getYoutubeTitle(musicUrl.replace(/.*?v=/,"").replace(/&.*/,""))
-        isLive =  await getYoutubeType(musicUrl.replace(/.*?v=/,"").replace(/&.*/,"")) == "live"
+	// musicUrl contains playlist then foreach add
+	if(messageInfo.match(/.*?list=/)){
+          //playlist
+          var playlistId = messageInfo.replace(/.*?list=/,"").replace(/&.*/,"")
+          var playlist = await ytpl(playlistId)
+          await playlist.items.forEachAsync(async(videoInfo) => {
+            musicUrl = videoInfo.shortUrl
+            musicTitle =  await getYoutubeTitle(videoInfo.id)
+            isLive =  await getYoutubeType(videoInfo.id) == "live"
+            addMusics.push({title:musicTitle, url: musicUrl, isLive: isLive})
+	  })
+	} else {
+          //video
+          musicUrl = messageInfo;
+          musicTitle =  await getYoutubeTitle(musicUrl.replace(/.*?v=/,"").replace(/&.*/,""))
+          isLive =  await getYoutubeType(musicUrl.replace(/.*?v=/,"").replace(/&.*/,"")) == "live"
+          addMusics.push({title:musicTitle, url: musicUrl, isLive: isLive})
+	}
       } else {
         const options = {
           pages: 1,
@@ -73,6 +94,7 @@ client.on("message", async (msg) => {
         musicTitle = searchResults.items[0].title;
         musicUrl = searchResults.items[0].url;
         isLive =  await getYoutubeType(musicUrl.replace(/.*?v=/,"").replace(/&.*/,"")) == "live"
+        addMusics.push({title:musicTitle, url: musicUrl, isLive: isLive})
       }
 
       if (!queue.get(msg.guild.id)) {
@@ -82,23 +104,25 @@ client.on("message", async (msg) => {
           songs: [],
         });
       }
-
-      queue.get(msg.guild.id).songs.push({ title: musicTitle, url: musicUrl, isLive: isLive });
+      
+      await addMusics.forEachAsync(async(item) => {
+        queue.get(msg.guild.id).songs.push({ title: item.title, url: item.url, isLive: item.isLive });
+      })
 
       if (!validUrl.isUri(messageInfo)) {
         msg.channel.send(
-          "queue index " +
+          "queue length " +
             queue.get(msg.guild.id).songs.length +
             "\r" +
-            musicUrl
+            queue.get(msg.guild.id).songs[0].url
         );
       } else {
         msg.channel.send(
-          "queue index " +
+          "queue length " +
             queue.get(msg.guild.id).songs.length +
             "\r" +
             "<" +
-            musicUrl +
+            queue.get(msg.guild.id).songs[0].url +
             ">"
         );
       }
@@ -121,8 +145,11 @@ client.on("message", async (msg) => {
         song.url = "<" + song.url;
         song.url = song.url + ">";
       });
-
-      msg.channel.send("queue" + "\r " + JSON.stringify(songs, null, "\t"));
+      const numChunks = Math.ceil(JSON.stringify(songs, null, "\t").length / 1900)
+      const chunks = new Array(numChunks)
+      for (let i=0, x=0; i < numChunks; ++i, x += 1900) {
+        msg.channel.send(JSON.stringify(songs, null, "\t").substr(x, 1900));
+      }
 
       return;
     }
