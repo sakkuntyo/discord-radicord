@@ -109,23 +109,9 @@ client.on("message", async (msg) => {
         queue.get(msg.guild.id).songs.push({ title: item.title, url: item.url, isLive: item.isLive });
       })
 
-      if (!validUrl.isUri(messageInfo)) {
-        msg.channel.send(
-          "queue length " +
-            queue.get(msg.guild.id).songs.length +
-            "\r" +
-            queue.get(msg.guild.id).songs[0].url
-        );
-      } else {
-        msg.channel.send(
-          "queue length " +
-            queue.get(msg.guild.id).songs.length +
-            "\r" +
-            "<" +
-            queue.get(msg.guild.id).songs[0].url +
-            ">"
-        );
-      }
+      msg.channel.send("added to queue -> " + messageInfo);
+      msg.channel.send("queue length -> " + queue.get(msg.guild.id).songs.length);
+      msg.channel.send("now playing -> " + "<" + queue.get(msg.guild.id).songs[0].url + ">")
 
       console.log(queue.get(msg.guild.id));
 
