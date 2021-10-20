@@ -1,6 +1,6 @@
 {
   "name": "discord-Pero",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "TtoSpeach Bot",
   "main": "index.js",
   "dependencies": {
