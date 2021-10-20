@@ -1,9 +1,10 @@
 {
-  "name": "discord-Pero",
-  "version": "1.0.2",
-  "description": "TtoSpeach Bot",
+  "name": "discord-sktrythmjs",
+  "version": "1.0.3",
+  "description": "music bot",
   "main": "index.js",
   "dependencies": {
+    "applicationinsights": "^2.1.8",
     "array-foreach-async": "^1.0.1",
     "discord-ytdl-core": "^5.0.4",
     "discord.js": "^12.3.0",

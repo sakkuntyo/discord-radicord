@@ -61,6 +61,7 @@ $ nvm use 14.17.6
 $ git clone https://github.com/sakkuntyo/discord-sktrythmjs
 $ cd discord-pero
 $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settings.json
+$ sed "s/<iKey>/ここに Application Insights のインストルメンテーションキーを入れる/g" -i settings.json // 必要な場合のみ
 $ npm install //失敗します
 $ sudo apt install build-essential -y
 $ npm config set python /usr/bin/python2.7

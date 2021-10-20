@@ -26,6 +26,26 @@ const validUrl = require("valid-url");
 //queue
 const queue = new Map();
 
+//appinsights
+const appInsights = require("applicationinsights");
+const iKey = JSON.parse(
+  fs.readFileSync("./settings.json", "utf8")
+).iKey;
+if(iKey){
+  appInsights.setup(iKey)
+    .setAutoDependencyCorrelation(true)
+    .setAutoCollectRequests(true)
+    .setAutoCollectPerformance(true, true)
+    .setAutoCollectExceptions(true)
+    .setAutoCollectDependencies(true)
+    .setAutoCollectConsole(true)
+    .setUseDiskRetryCaching(true)
+    .setSendLiveMetrics(true)
+    .setAutoCollectConsole(true, true)
+    .setAutoCollectPreAggregatedMetrics(true) // 1.8.10では使用できないオプション
+    .start();
+}
+
 client.on("ready", () => {
   if (!fs.existsSync("./tmp")) {
     fs.mkdirSync("./tmp");
