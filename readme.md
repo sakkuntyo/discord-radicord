@@ -58,7 +58,7 @@ $ nvm install 14.17.6
 $ nvm use 14.17.6
 
 # このアプリの起動
-$ git clone https://github.com/sakkuntyo/discord-pero
+$ git clone https://github.com/sakkuntyo/discord-sktrythmjs
 $ cd discord-pero
 $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settings.json
 $ npm install //失敗します
