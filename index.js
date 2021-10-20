@@ -48,7 +48,7 @@ if(iKey){
 }
 
 client.on("ready", () => {
-  if(os.release("Azure")){
+  if(os.release().includes("azure")){
     client.user.setActivity("Running on Azure");
   } else {
     client.user.setActivity("Running");
