@@ -1,4 +1,5 @@
 //共通ライブラリ
+const os = require("os")
 const fs = require("fs");
 const exec = require("child_process").exec;
 const Duplex = require("stream").Duplex;
@@ -47,6 +48,11 @@ if(iKey){
 }
 
 client.on("ready", () => {
+  if(os.release("Azure")){
+    client.user.setActivity("Running on Azure");
+  } else {
+    client.user.setActivity("Running");
+  }
   if (!fs.existsSync("./tmp")) {
     fs.mkdirSync("./tmp");
   }
