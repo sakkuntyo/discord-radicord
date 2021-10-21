@@ -46,6 +46,7 @@ if(iKey){
     .setAutoCollectPreAggregatedMetrics(true) // 1.8.10では使用できないオプション
     .start();
 }
+const aiclient = appInsights.defaultClient;
 
 client.on("ready", () => {
   if(os.release().includes("azure")){
@@ -244,9 +245,11 @@ function play(msg) {
     });
   }
 
-  console.log(queue.get(msg.guild.id).songs[0].url)
-  console.log(queue.get(msg.guild.id).songs[0].title)
-  msg.channel.send("now playing -> " + queue.get(msg.guild.id).songs[0].url)
+  console.log({"musicUrl": queue.get(msg.guild.id).songs[0].url, "musicTitle": queue.get(msg.guild.id).songs[0].title})
+  if(aiclient){
+    aiclient.trackEvent({name: "play music", properties: {"musicUrl": queue.get(msg.guild.id).songs[0].url, "musicTitle": queue.get(msg.guild.id).songs[0].title}})
+  }
+  //msg.channel.send("now playing -> " + queue.get(msg.guild.id).songs[0].url)
 
   msg.member.voice.channel.join().then((connection) => {
     queue.get(msg.guild.id).playing = true;
