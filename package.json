@@ -26,7 +26,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node --trace-warnings index.js",
+    "preinstall": "npm config set python /usr/bin/python2.7"
   },
   "repository": {
     "type": "git",

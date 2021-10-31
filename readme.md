@@ -64,7 +64,6 @@ $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settin
 $ sed "s/<iKey>/ここに Application Insights のインストルメンテーションキーを入れる/g" -i settings.json // 必要な場合のみ
 $ npm install //失敗します
 $ sudo apt install build-essential -y
-$ npm config set python /usr/bin/python2.7
 $ npm install //成功します
 $ npm start
 
