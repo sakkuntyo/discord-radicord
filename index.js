@@ -87,7 +87,7 @@ client.on("message", async (msg) => {
       console.log("messageInfo ->", messageInfo);
 
       //search and push queue
-      addMusics = [];
+      const addMusics = [];
 
       var musicTitle = "";
       var musicUrl = "";
