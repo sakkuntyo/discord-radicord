@@ -152,7 +152,13 @@ client.on("message", async (msg) => {
 
     // queue cmd
     if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/)) {
-      var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
+      var songs = ""
+      try {
+	songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
+      } catch(err) {
+	console.log(err)
+        return
+      }
       songs.filter((song) => {
         song.url = "<" + song.url;
         song.url = song.url + ">";
