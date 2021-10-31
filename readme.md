@@ -59,7 +59,7 @@ $ nvm use 14.17.6
 
 # このアプリの起動
 $ git clone https://github.com/sakkuntyo/discord-sktrythmjs
-$ cd discord-pero
+$ cd discord-sktrythmjs
 $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settings.json
 $ sed "s/<iKey>/ここに Application Insights のインストルメンテーションキーを入れる/g" -i settings.json // 必要な場合のみ
 $ npm install //失敗します
@@ -71,7 +71,7 @@ $ npm start
 
 # デーモンにしたい場合、pm2を使う
 $ npm install -g pm2
-$ pm2 start index pero
+$ pm2 start index --name sktrythm
 ## OSの起動と同時に起動
 $ pm2 startup
 ## 現在のpm2 listの状態を保存
