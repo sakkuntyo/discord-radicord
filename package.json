@@ -8,6 +8,7 @@
     "array-foreach-async": "^1.0.1",
     "discord-ytdl-core": "^5.0.4",
     "discord.js": "^12.3.0",
+    "ffmpeg-static": "^4.4.0",
     "get-youtube-title": "^1.0.1",
     "get-youtube-title-await": "^1.1.5",
     "get-youtube-type-await": "^1.0.3",
