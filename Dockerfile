@@ -18,7 +18,6 @@ RUN npm install
 # アプリケーションのソースをバンドルする
 COPY . .
 
-RUN chmod 744 ./startup.sh
 RUN npm install -g pm2
 
 CMD [ "pm2", "--no-daemon", "start", "index.js" ]
