@@ -162,15 +162,17 @@ client.on("message", async (msg) => {
     if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/)) {
       var songs = ""
       try {
-	songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
+	let replacer = function(key,value){
+		if (key == "url") {
+		  return "<" + value + ">"
+		}
+		return value
+	}
+	songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs, replacer));
       } catch(err) {
 	console.log(err)
         return
       }
-      songs.filter((song) => {
-        song.url = "<" + song.url;
-        song.url = song.url + ">";
-      });
       msg.channel.send("queue ->");
       const numChunks = Math.ceil(JSON.stringify(songs, null, "\t").length / 1900)
       const chunks = new Array(numChunks)
@@ -201,12 +203,13 @@ client.on("message", async (msg) => {
       var index = secondory_msg.replace(/^mv /, "") - 1;
       console.log(queue.get(msg.guild.id).songs);
       queue.get(msg.guild.id).songs.move(index, 1);
-
-      var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs));
-      songs.filter((song) => {
-        song.url = "<" + song.url;
-        song.url = song.url + ">";
-      });
+      let replacer = function(key,value){
+	if (key == "url") {
+	  return "<" + value + ">"
+	}
+	return value
+      }
+      var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs, replacer));
 
       msg.channel.send("shuffled" + "\r " + JSON.stringify(songs, null, "\t"));
 
