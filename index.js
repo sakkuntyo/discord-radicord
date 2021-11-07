@@ -214,6 +214,10 @@ client.on("message", async (msg) => {
 	return value
       }
       var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs, replacer));
+      songs = songs.reduce((prev, current, index) => {
+        prev[index + 1] = current;
+        return prev;
+      }, {})
 
       msg.channel.send("moved" + "\r " + JSON.stringify(songs, null, "\t"));
 
