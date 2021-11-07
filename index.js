@@ -190,7 +190,7 @@ client.on("message", async (msg) => {
     // shuffle cmd
     if (secondory_msg.match(/^sh/) || secondory_msg.match(/^shuffle/)) {
       for (i = queue.get(msg.guild.id).songs.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
+        var j = Math.floor(Math.random() * (i - 1) + 1);
         var tmp = queue.get(msg.guild.id).songs[i];
         queue.get(msg.guild.id).songs[i] = queue.get(msg.guild.id).songs[j];
         queue.get(msg.guild.id).songs[j] = tmp;
