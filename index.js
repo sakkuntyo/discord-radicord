@@ -215,7 +215,7 @@ client.on("message", async (msg) => {
       }
       var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs, replacer));
 
-      msg.channel.send("shuffled" + "\r " + JSON.stringify(songs, null, "\t"));
+      msg.channel.send("moved" + "\r " + JSON.stringify(songs, null, "\t"));
 
       return;
     }
