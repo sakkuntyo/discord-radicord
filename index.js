@@ -153,7 +153,9 @@ client.on("message", async (msg) => {
     // now cmd
     if (secondory_msg.match(/^n/) || secondory_msg.match(/^now/)) {
 	let song = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs[0]));
-        msg.channel.send(JSON.stringify(song, null, "\t"));
+        msg.channel.send("1. ".concat(song.title, "\n",
+		song.url)
+	);
     }
 
     // queue cmd
