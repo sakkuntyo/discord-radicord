@@ -5,6 +5,17 @@ const exec = require("child_process").exec;
 const Duplex = require("stream").Duplex;
 require("array-foreach-async");
 
+//その他共通情報
+const name = JSON.parse(
+  fs.readFileSync("./package.json", "utf8")
+).name;
+const version = JSON.parse(
+  fs.readFileSync("./package.json", "utf8")
+).version;
+const description = JSON.parse(
+  fs.readFileSync("./package.json", "utf8")
+).description;
+
 //discordbotの操作に必要
 const Discord = require("discord.js");
 const discordtoken = JSON.parse(
@@ -227,6 +238,14 @@ client.on("message", async (msg) => {
     // skip cmd
     if (secondory_msg.match(/^s/) || secondory_msg.match(/^skip/) ) {
       queue.get(msg.guild.id).connection.dispatcher.end("Skip command used")
+      return
+    }
+
+    // version cmd
+    if (secondory_msg.match(/^v/) || secondory_msg.match(/^version/) ) {
+      msg.channel.send("bot name : " + name);
+      msg.channel.send("version : " + version);
+      msg.channel.send("description : " + description);
       return
     }
 
