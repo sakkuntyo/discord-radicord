@@ -149,6 +149,12 @@ client.on("message", async (msg) => {
 
       play(msg, queue.get(msg.guild.id).songs[0]);
     }
+    
+    // now cmd
+    if (secondory_msg.match(/^n/) || secondory_msg.match(/^now/)) {
+	let song = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs[0]));
+        msg.channel.send(JSON.stringify(song, null, "\t"));
+    }
 
     // queue cmd
     if (secondory_msg.match(/^q/) || secondory_msg.match(/^queue/)) {
