@@ -24,6 +24,7 @@ const discordtoken = JSON.parse(
 const client = new Discord.Client();
 const getYoutubeTitle = require('get-youtube-title-await')
 const getYoutubeType = require('get-youtube-type-await')
+const spl = require('search-youtube-playlists')
 
 //ytdl
 const ytdl = require("discord-ytdl-core");
@@ -236,7 +237,7 @@ client.on("message", async (msg) => {
     }
 
     // skip cmd
-    if (secondory_msg.match(/^s/) || secondory_msg.match(/^skip/) ) {
+    if (secondory_msg.match(/^s$/) || secondory_msg.match(/^skip$/) ) {
       queue.get(msg.guild.id).connection.dispatcher.end("Skip command used")
       return
     }
@@ -273,6 +274,27 @@ client.on("message", async (msg) => {
         console.log(e);
         return 1;
       }
+    }
+
+    // search playlist cmd
+    if (secondory_msg.match(/^spl/)) {
+      console.log("secondcmd: search playlist");
+      var keyword = secondory_msg.replace(/^spl /, "");
+      console.log("keyword ->", keyword);
+      let replacer = function(key,value){
+      	if (key == "id") {
+      	  return "<" + "https://www.youtube.com/playlist?list=" + value + ">"
+      	}
+      	return value
+      }
+      playlists = await spl(keyword);
+      console.dir(playlists)
+      playlists = JSON.parse(JSON.stringify(playlists, replacer));
+      playlists = playlists.reduce((prev, current, index) => {
+      	prev[index + 1] = current;
+      	return prev;
+      }, {})
+      msg.channel.send(JSON.stringify(playlists,null,2))
     }
   }
 });
