@@ -247,12 +247,14 @@ client.on("message", async (msg) => {
       msg.channel.send("version : " + version);
       msg.channel.send("description : " + description);
       msg.channel.send("How to use : " + "https://github.com/sakkuntyo/discord-sktrythmjs/blob/dependabot/npm_and_yarn/ws-7.5.5/readme.md");
+      msg.channel.send("invitation link : " + "https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot");
       return;
     }
 
     // help cmd
     if (secondory_msg.match(/^h/) || secondory_msg.match(/^help/) ) {
-      msg.channel.send("How to use : " + "https://github.com/sakkuntyo/discord-sktrythmjs/blob/dependabot/npm_and_yarn/ws-7.5.5/readme.md");
+      msg.channel.send("How to use : " + "https://github.com/sakkuntyo/discord-sktrythmjs/blob/dependabot/npm_and_yarn/ws-7.5.5/readme.mad");
+      msg.channel.send("invitation link : " + "https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot");
       return;
     }
 
