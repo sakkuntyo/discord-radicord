@@ -236,6 +236,31 @@ client.on("message", async (msg) => {
       return;
     }
 
+    // mv cmd
+    if (secondory_msg.match(/^rm .*/)) {
+      console.log("secondcmd: rm");
+      var index = secondory_msg.replace(/^rm /, "") - 1;
+      if (index == 0){
+        return;
+      }
+      queue.get(msg.guild.id).songs.splice(index,1);
+      let replacer = function(key,value){
+	if (key == "url") {
+	  return "<" + value + ">"
+	}
+	return value
+      }
+      var songs = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs, replacer));
+      songs = songs.reduce((prev, current, index) => {
+        prev[index + 1] = current;
+        return prev;
+      }, {})
+
+      msg.channel.send("removed -> " + (index + 1));
+
+      return;
+    }
+
     // skip cmd
     if (secondory_msg.match(/^s$/) || secondory_msg.match(/^skip$/) ) {
       queue.get(msg.guild.id).connection.dispatcher.end("Skip command used")
