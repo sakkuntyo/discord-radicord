@@ -30,7 +30,7 @@ const spl = require('search-youtube-playlists')
 const ytdl = require("discord-ytdl-core");
 
 //ytpl
-const ytpl = require('ytpl');
+const ytpl = require('skt-ytpl');
 
 //ytsr
 const ytsr = require("ytsr");

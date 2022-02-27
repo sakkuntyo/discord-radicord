@@ -1,6 +1,6 @@
 {
   "name": "discord-sktrythmjs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "music bot",
   "main": "index.js",
   "dependencies": {
@@ -17,9 +17,9 @@
     "opusscript": "0.0.6",
     "request": "^2.88.0",
     "search-youtube-playlists": "^1.1.0",
+    "skt-ytpl": "^1.0.0",
     "valid-url": "^1.0.9",
     "ytdl-core": "^4.9.1",
-    "ytpl": "^2.2.3",
     "ytsr": "^3.5.3"
   },
   "devDependencies": {
