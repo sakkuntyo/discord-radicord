@@ -141,6 +141,7 @@ client.on("message", async (msg) => {
           playing: false,
           connection: null,
           songs: [],
+          isLoop: false,
         });
       }
       
@@ -217,6 +218,7 @@ client.on("message", async (msg) => {
     if (secondory_msg.match(/^mv .*/)) {
       console.log("secondcmd: mv");
       var index = secondory_msg.replace(/^mv /, "") - 1;
+      //have issue #6
       console.log(queue.get(msg.guild.id).songs);
       queue.get(msg.guild.id).songs.move(index, 1);
       let replacer = function(key,value){
@@ -264,6 +266,18 @@ client.on("message", async (msg) => {
     // skip cmd
     if (secondory_msg.match(/^s$/) || secondory_msg.match(/^skip$/) ) {
       queue.get(msg.guild.id).connection.dispatcher.end("Skip command used")
+      return
+    }
+
+    // loop cmd
+    if (secondory_msg.match(/^loop$/)) {
+      if (queue.get(msg.guild.id).isLoop) {
+        queue.get(msg.guild.id).isLoop = false
+        msg.channel.send("changed loop status -> off");
+      } else {
+        queue.get(msg.guild.id).isLoop = true
+        msg.channel.send("changed loop status -> on");
+      }
       return
     }
 
@@ -363,7 +377,11 @@ function play(msg) {
       .on("finish", () => {
         console.log("finished")
         queue.get(msg.guild.id).playing = false;
-        queue.get(msg.guild.id).songs.shift();
+        if (queue.get(msg.guild.id).isLoop) {
+          queue.get(msg.guild.id).songs.move(0, 1);
+	} else {
+          queue.get(msg.guild.id).songs.shift();
+	}
         if (queue.get(msg.guild.id).songs.length == 0) {
           console.log("The song is over and the queue is empty, so I stop.");
           msg.guild.me.voice.channel.leave();
