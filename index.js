@@ -382,7 +382,7 @@ function play(msg) {
         console.log("finished")
         queue.get(msg.guild.id).playing = false;
         if (queue.get(msg.guild.id).isLoop) {
-          queue.get(msg.guild.id).songs.move(0, 1);
+          queue.get(msg.guild.id).songs.move(0, queue.get(msg.guild.id).songs.length - 1);
 	} else {
           queue.get(msg.guild.id).songs.shift();
 	}
