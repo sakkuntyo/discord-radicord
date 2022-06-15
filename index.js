@@ -219,6 +219,10 @@ client.on("message", async (msg) => {
       console.log("secondcmd: mv");
       var index = secondory_msg.replace(/^mv /, "") - 1;
       //have issue #6
+      if (index == 0) {
+        msg.channel.send("1 cannot be specified");
+        return;
+      }
       console.log(queue.get(msg.guild.id).songs);
       queue.get(msg.guild.id).songs.move(index, 1);
       let replacer = function(key,value){
