@@ -339,6 +339,66 @@ client.on("message", async (msg) => {
       }, {})
       msg.channel.send(JSON.stringify(playlists,null,2))
     }
+    
+    // play playlist cmd
+    if (secondory_msg.match(/^ppl/)) {
+      console.log("secondcmd: play playlist");
+      var indexAndKeyword = secondory_msg.replace(/^ppl /, "");
+      console.log("indexAndkeyword ->", indexAndKeyword);
+      var index = indexAndKeyword.replace(/([1-5]).*/, '$1') - 1;
+      console.log("index ->", index);
+      var keyword = indexAndKeyword.replace(/[1-5] /, '');
+      console.log("keyword ->", keyword);
+      let replacer = function(key,value){
+      	if (key == "id") {
+      	  return "<" + "https://www.youtube.com/playlist?list=" + value + ">"
+      	}
+      	return value
+      }
+      playlists = await spl(keyword);
+      console.dir(playlists)
+　　  playlistId = playlists[index].id
+      console.log("playlistId ->" + playlists[index].id)
+
+      //search and push queue
+      const addMusics = [];
+
+      var musicTitle = "";
+      var musicUrl = "";
+      var isLive = "";
+      //playlist
+      var playlist = await ytpl(playlistId)
+      await playlist.items.forEachAsync(async(videoInfo) => {
+        musicUrl = videoInfo.shortUrl
+        musicTitle =  await getYoutubeTitle(videoInfo.id)
+        isLive =  await getYoutubeType(videoInfo.id) == "live"
+        addMusics.push({title:musicTitle, url: musicUrl, isLive: isLive})
+      })
+
+      if (!queue.get(msg.guild.id)) {
+        queue.set(msg.guild.id, {
+          playing: false,
+          connection: null,
+          songs: [],
+          isLoop: false,
+        });
+      }
+      
+      await addMusics.forEachAsync(async(item) => {
+        queue.get(msg.guild.id).songs.push({ title: item.title, url: item.url, isLive: item.isLive });
+      })
+
+      msg.channel.send("added to queue -> " + (parseInt(index) + 1) + " " + keyword);
+      msg.channel.send("queue length -> " + queue.get(msg.guild.id).songs.length);
+      
+      //already playing
+      if (queue.get(msg.guild.id).playing) {
+        console.log("Since it is playing, we will just add it to the queue.");
+        return;
+      }
+
+      play(msg, queue.get(msg.guild.id).songs[0]);
+    }
   }
 });
 
