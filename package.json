@@ -1,7 +1,7 @@
 {
-  "name": "discord-sktrythmjs",
-  "version": "1.0.12",
-  "description": "music bot",
+  "name": "discord-radicord",
+  "version": "0.0.1",
+  "description": "radio bot",
   "main": "index.js",
   "dependencies": {
     "applicationinsights": "^2.1.8",

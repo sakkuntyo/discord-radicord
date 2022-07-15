@@ -19,93 +19,7 @@
 
 ## 使い方
 
-![](./howtouse.gif)
-
-### 再生
-
-```
-!sr (<play> or <p>) (<URL> or <keyword>)
-```
-
-### ボイスチャンネルから退出
-
-注意：これをしないと退出しません
-
-```
-!sr (<disc> or <d>)
-```
-
-### キューを表示
-
-```
-!sr (<queue> or <q>)
-``` 
-
-### 再生中の曲を表示
-
-```
-!sr (<now> or <n>)
-``` 
-
-### キューのシャッフル
-
-```
-!sr (<shuffle>)
-``` 
-
-### 次の曲を再生
-
-```
-!sr (<skip> or <s>)
-```
-
-### キューの曲を先頭に移動
-
-```
-!sr <mv> 3
-```
-> 3番目の曲が移動されます。
-
-### ループ機能の切り替え
-
-```
-!sr loop
-```
-
-### キューの曲を削除
-
-```
-!sr <rm> 3
-```
-> 3番目の曲が削除されます。
-
-### プレイリストを検索
-
-```
-!sr (<spl>) キーワード
-```
-
-### プレイリストを再生
-
-```
-!sr (<spl>) (プレイリスト検索番号) キーワード
-```
-
-### ヘルプ
-
-使い方ページのリンク、招待リンクを表示します。
-
-```
-!sr (<help> or <h>)
-```
-
-### バージョン情報
-
-招待リンクやbotのバージョン情報を表示します
-
-```
-!sr (<version> or <v>)
-```
+準備中
 
 ## 起動方法
 
@@ -118,8 +32,8 @@ $ nvm install 14.17.6
 $ nvm use 14.17.6
 
 # このアプリの起動
-$ git clone https://github.com/sakkuntyo/discord-sktrythmjs
-$ cd discord-sktrythmjs
+$ git clone https://github.com/sakkuntyo/discord-radicord
+$ cd discord-radicord
 $ sed "s/<discordtoken>/ここにdiscordのトークンを入れる/g" -i settings.json
 $ sed "s/<iKey>/ここに Application Insights のインストルメンテーションキーを入れる/g" -i settings.json // 必要な場合のみ
 $ npm install //失敗します
@@ -129,7 +43,7 @@ $ npm start
 
 # デーモンにしたい場合、pm2を使う
 $ npm install -g pm2
-$ pm2 start index --name sktrythm
+$ pm2 start index --name radicord
 ## OSの起動と同時に起動
 $ pm2 startup
 ## 現在のpm2 listの状態を保存
