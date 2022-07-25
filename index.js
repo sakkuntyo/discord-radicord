@@ -27,7 +27,7 @@ const getYoutubeType = require('get-youtube-type-await')
 const spl = require('search-youtube-playlists')
 
 //ytdl
-const ytdl = require("discord-ytdl-core");
+const ytdl = require("discord-radikodl-core");
 
 //ytpl
 const ytpl = require('skt-ytpl');
@@ -76,9 +76,9 @@ client.on("message", async (msg) => {
   if (msg.author.bot) return;
   //console.log("message:", msg.content);
 
-  if (msg.content.match(/^#sr /) || msg.channel.name.match("sr")) {
+  if (msg.content.match(/^%sr /) || msg.channel.name.match("sr")) {
     console.log("firstcmd: sr");
-    var secondory_msg = msg.content.replace(/^#sr /, "");
+    var secondory_msg = msg.content.replace(/^%sr /, "");
 
     var voiceChannel = msg.member.voice.channel;
 
@@ -435,7 +435,9 @@ function play(msg) {
     queue.get(msg.guild.id).connection = connection;
 
     let dispatcher = connection
-      .play("output.mp3")
+      .play(stream, {
+        type: "opus",
+      })
       .on("finish", () => {
         console.log("finished")
         queue.get(msg.guild.id).playing = false;
