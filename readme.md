@@ -1,6 +1,6 @@
-# 再生してくれるBot
+# ラジオかけてくれるボット
 
-[招待リンク](https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot)
+[招待リンク](https://discord.com/api/oauth2/authorize?client_id=1001046882912567326&permissions=3155968&scope=bot)
 
 ## 目的
 
@@ -11,16 +11,28 @@
 - ubuntu 20.04 (Azure VM)
   - nodejs 14.17.6
     - discord.js 12.3.0
-    - radijs
+    - radijs　1.0.1
+    - discord-radikodl-core 0.0.4
+    - radikodl-core 0.0.4
 
 ## 動き概要
 
-1. Discordでボイスチャンネルに入っている人から!spで始まるメッセージを受け取る
+1. Discordでボイスチャンネルに入っている人から!radikoで始まるメッセージを受け取る
 2. 再生する
 
 ## 使い方
 
-準備中
+再生
+
+```
+!radiko p TBS
+```
+
+切断
+
+```
+!radiko d
+```
 
 ## 起動方法
 
