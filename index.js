@@ -411,14 +411,7 @@ function play(msg) {
 
   var stream = null;
   if(queue.get(msg.guild.id).songs[0].isLive){
-    stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
-      opusEncoded: true,
-      encoderArgs: ["-af", "bass=g=3,volume=0.05"],
-    });
-  }
-  else {
-    stream = ytdl(queue.get(msg.guild.id).songs[0].url, {
-      filter: "audioonly",
+    stream = ytdl(queue.get(msg.guild.id).songs[0].url, "dfImprmy_fuB4YzmZGH6lA", {
       opusEncoded: true,
       encoderArgs: ["-af", "bass=g=3,volume=0.05"],
     });

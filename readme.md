@@ -11,6 +11,7 @@
 - ubuntu 20.04 (Azure VM)
   - nodejs 14.17.6
     - discord.js 12.3.0
+    - radijs
 
 ## 動き概要
 

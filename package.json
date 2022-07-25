@@ -1,6 +1,6 @@
 {
   "name": "discord-radicord",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "radio bot",
   "main": "index.js",
   "dependencies": {
@@ -16,7 +16,7 @@
     "isomorphic-fetch": "^2.2.1",
     "node-opus": "^0.3.3",
     "opusscript": "0.0.6",
-    "radikodl-core": "0.0.1",
+    "radikodl-core": "0.0.3",
     "request": "^2.88.0",
     "search-youtube-playlists": "^1.1.0",
     "skt-ytpl": "^1.0.0",
