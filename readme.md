@@ -25,7 +25,13 @@
 再生
 
 ```
-!radiko p TBS
+!radiko p 放送局ID
+```
+
+放送局ID 一覧
+
+```
+!radiko slist
 ```
 
 切断

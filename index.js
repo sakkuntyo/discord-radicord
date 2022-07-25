@@ -139,6 +139,11 @@ client.on("message", async (msg) => {
       play(msg, queue.get(msg.guild.id).songs[0]);
     }
     
+    // slist cmd
+    if (secondory_msg.match(/^slist/)) {
+        msg.channel.send(await radijs.get_station_id_list());
+    }
+
     // now cmd
     if (secondory_msg.match(/^n/) || secondory_msg.match(/^now/)) {
 	let song = JSON.parse(JSON.stringify(queue.get(msg.guild.id).songs[0]));
