@@ -79,7 +79,7 @@ client.on("message", async (msg) => {
   if (msg.author.bot) return;
   //console.log("message:", msg.content);
 
-  if (msg.content.match(/^!radiko /) || msg.channel.name.match("radiko")) {
+  if (msg.content.match(/^!radiko /)) {
     console.log("firstcmd: sr");
     var secondory_msg = msg.content.replace(/^!radiko /, "");
 
