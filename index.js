@@ -147,6 +147,18 @@ client.on("message", async (msg) => {
       return
     }
 
+    // loop cmd
+    if (secondory_msg.match(/^loop$/)) {
+      if (queue.get(msg.guild.id).isLoop) {
+        queue.get(msg.guild.id).isLoop = false
+        msg.channel.send("changed loop status -> off");
+      } else {
+        queue.get(msg.guild.id).isLoop = true
+        msg.channel.send("changed loop status -> on");
+      }
+      return
+    }
+
     // slist cmd
     if (secondory_msg.match(/^slist/)) {
         msg.channel.send(await radijs.get_station_id_list());

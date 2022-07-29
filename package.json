@@ -1,6 +1,6 @@
 {
   "name": "discord-radicord",
-  "version": "0.0.4.3",
+  "version": "0.0.4.4",
   "description": "radio bot",
   "main": "index.js",
   "dependencies": {
