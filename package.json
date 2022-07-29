@@ -1,9 +1,10 @@
 {
   "name": "discord-radicord",
-  "version": "0.0.4.2",
+  "version": "0.0.4.3",
   "description": "radio bot",
   "main": "index.js",
   "dependencies": {
+    "@discordjs/voice": "^0.11.0",
     "applicationinsights": "^2.1.8",
     "array-foreach-async": "^1.0.1",
     "discord-radikodl-core": "^5.1.0",

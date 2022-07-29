@@ -18,6 +18,8 @@ const description = JSON.parse(
 
 //discordbotの操作に必要
 const Discord = require("discord.js");
+const { AudioPlayerStatus } = require('@discordjs/voice');
+
 const discordtoken = JSON.parse(
   fs.readFileSync("./settings.json", "utf8")
 ).discordtoken;
@@ -139,6 +141,12 @@ client.on("message", async (msg) => {
       play(msg, queue.get(msg.guild.id).songs[0]);
     }
     
+    // skip cmd
+    if (secondory_msg.match(/^s$/) || secondory_msg.match(/^skip$/) ) {
+      queue.get(msg.guild.id).connection.dispatcher.end("Skip command used")
+      return
+    }
+
     // slist cmd
     if (secondory_msg.match(/^slist/)) {
         msg.channel.send(await radijs.get_station_id_list());
@@ -215,6 +223,7 @@ client.on("message", async (msg) => {
       }
     }
   }
+
 });
 
 async function play(msg) {
@@ -230,7 +239,8 @@ async function play(msg) {
   stream = ytdl(queue.get(msg.guild.id).songs[0].chunkUrl, await radijs.get_authtoken(), {
     opusEncoded: true,
     encoderArgs: ["-af", "bass=g=3,volume=0.05"],
-  });
+  })
+  
 
   console.log({"musicUrl": queue.get(msg.guild.id).songs[0].url, "musicTitle": queue.get(msg.guild.id).songs[0].title})
   if(aiclient){
@@ -242,6 +252,9 @@ async function play(msg) {
     queue.get(msg.guild.id).playing = true;
     queue.get(msg.guild.id).connection = connection;
 
+    connection.on(AudioPlayerStatus.Idle, () => {
+  	console.log('idling!');
+    });
     let dispatcher = connection
       .play(stream, {
         type: "opus",
