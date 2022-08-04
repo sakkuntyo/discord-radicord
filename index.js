@@ -255,9 +255,9 @@ async function play(msg) {
   })
   
 
-  console.log({"musicUrl": queue.get(msg.guild.id).songs[0].url, "musicTitle": queue.get(msg.guild.id).songs[0].title})
+  console.log({"chunkUrl": queue.get(msg.guild.id).songs[0].chunkUrl, "url": queue.get(msg.guild.id).songs[0].url, "title": queue.get(msg.guild.id).songs[0].title})
   if(aiclient){
-    aiclient.trackEvent({name: "play music", properties: {"musicUrl": queue.get(msg.guild.id).songs[0].url, "musicTitle": queue.get(msg.guild.id).songs[0].title}})
+    aiclient.trackEvent({name: "play music", properties: {"chunkUrl": queue.get(msg.guild.id).songs[0].chunkUrl, "url": queue.get(msg.guild.id).songs[0].url, "title": queue.get(msg.guild.id).songs[0].title}})
   }
   //msg.channel.send("now playing -> " + queue.get(msg.guild.id).songs[0].url)
 
@@ -270,7 +270,7 @@ async function play(msg) {
       if (!connection.speaking.bitfield){
         clearInterval(voiceStatusPolling);
         // musicUrl contains playlist then foreach add
-        if (queue.get(msg.guild.id).songs.length == 0) {
+        if (!queue.get(msg.guild.id) || queue.get(msg.guild.id).songs.length == 0) {
           return;
         } else {
           queue.get(msg.guild.id).songs[0].chunkUrl = await radijs.get_m3u8(await radijs.get_bangumi_uri(queue.get(msg.guild.id).songs[0].title), await radijs.get_authtoken())
