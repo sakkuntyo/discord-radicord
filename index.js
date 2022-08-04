@@ -138,7 +138,8 @@ client.on("message", async (msg) => {
         return;
       }
 
-      play(msg, queue.get(msg.guild.id).songs[0]);
+      //play(msg, queue.get(msg.guild.id).songs[0]);
+      play(msg);
     }
     
     // skip cmd
@@ -207,14 +208,14 @@ client.on("message", async (msg) => {
       msg.channel.send("version : " + version);
       msg.channel.send("description : " + description);
       msg.channel.send("How to use : " + "https://github.com/sakkuntyo/discord-radicord/blob/dependabot/npm_and_yarn/ws-7.5.5/readme.md");
-      msg.channel.send("invitation link : " + "https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot");
+      msg.channel.send("invitation link : " + "https://discord.com/api/oauth2/authorize?client_id=1001046882912567326&permissions=3155968&scope=bot");
       return;
     }
 
     // help cmd
     if (secondory_msg.match(/^h/) || secondory_msg.match(/^help/) ) {
       msg.channel.send("How to use : " + "https://github.com/sakkuntyo/discord-radicord/blob/dependabot/npm_and_yarn/ws-7.5.5/readme.md");
-      msg.channel.send("invitation link : " + "https://discord.com/api/oauth2/authorize?client_id=889584860308570113&permissions=3147904&scope=bot");
+      msg.channel.send("invitation link : " + "https://discord.com/api/oauth2/authorize?client_id=1001046882912567326&permissions=3155968&scope=bot");
       return;
     }
 
@@ -263,10 +264,21 @@ async function play(msg) {
   msg.member.voice.channel.join().then((connection) => {
     queue.get(msg.guild.id).playing = true;
     queue.get(msg.guild.id).connection = connection;
-
-    connection.on(AudioPlayerStatus.Idle, () => {
-  	console.log('idling!');
-    });
+    
+    voiceStatusPolling = setInterval(async () => {
+      await sleep(1000);
+      if (!connection.speaking.bitfield){
+        clearInterval(voiceStatusPolling);
+        // musicUrl contains playlist then foreach add
+        if (queue.get(msg.guild.id).songs.length == 0) {
+          return;
+        } else {
+          queue.get(msg.guild.id).songs[0].chunkUrl = await radijs.get_m3u8(await radijs.get_bangumi_uri(queue.get(msg.guild.id).songs[0].title), await radijs.get_authtoken())
+          msg.channel.send("It is now silent and will play again.");
+          play(msg);
+        }
+      }
+    },1000)
     let dispatcher = connection
       .play(stream, {
         type: "opus",
@@ -284,14 +296,17 @@ async function play(msg) {
           msg.guild.me.voice.channel.leave();
           return;
         }
+        clearInterval(voiceStatusPolling);
         play(msg);
       })
       .on("error", (error) => {
-        console.log(error)
+        console.log("error -> ", error)
+        clearInterval(voiceStatusPolling);
 	play(msg)
       })
       .on("debug", (error) => {
-        console.log(error)
+        console.log("debug -> ", error)
+        clearInterval(voiceStatusPolling);
         play(msg)
       });
   });
@@ -315,3 +330,14 @@ Array.prototype.move = function (from, to) {
   this.splice(to, 0, element);
   return this;
 };
+
+/**
+ * sleep.js
+ */
+const sleep = (time) => {
+  return new Promise((resolve, reject) => {
+      setTimeout(() => {
+          resolve()
+      }, time)
+  })
+}
